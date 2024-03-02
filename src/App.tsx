@@ -2,9 +2,12 @@ import { useQuery } from "react-query";
 import "./App.css";
 import { getBitcoinPrice } from "./Services/coinBaseService";
 import Button from "./Components/Button";
+import { useState } from "react";
 
 const App: React.FC = () => {
 	const { data, isLoading, isError } = useQuery({ queryFn: getBitcoinPrice });
+	const [buttonDisabled, setButtonDisabled] = useState(false);
+	const [option, setOption] = useState<string>("");
 
 	/*useEffect(() => {
 		getBitcoinPrice().then((priceResponse) => {
@@ -19,8 +22,13 @@ const App: React.FC = () => {
 
 	if (isError) return <div>Error fetching data</div>;
 
-	const handleClick = () => {
-		console.log("meow");
+	const handleClick = (selectedButton: string) => {
+		console.log("button click");
+		setOption(selectedButton);
+		setButtonDisabled(true);
+		setTimeout(() => {
+			setButtonDisabled(false);
+		}, 60000);
 	};
 
 	return (
@@ -34,6 +42,7 @@ const App: React.FC = () => {
 						onClick={handleClick}
 						buttonText="UP"
 						colorClass="bg-green-500"
+						disabled={buttonDisabled}
 					/>
 				</div>
 				<div className="p-3">
@@ -41,8 +50,10 @@ const App: React.FC = () => {
 						onClick={handleClick}
 						buttonText="DOWN"
 						colorClass="bg-red-500"
+						disabled={buttonDisabled}
 					/>
 				</div>
+				{option && <p>You selected: {option}</p>}
 			</div>
 		</div>
 	);
