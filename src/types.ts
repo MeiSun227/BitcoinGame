@@ -4,5 +4,5 @@ export interface Bitcoin {
 }
 
 export interface Rates {
-	[key: string]: string;
+	[key: string]: number | undefined;
 }

@@ -1,8 +1,8 @@
 interface ButtonProps {
 	buttonText: string;
 	colorClass: string;
-	onClick: (text: string) => void;
 	disabled: boolean;
+	onClick: (selectedButton: string) => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({
 		<>
 			<div className="text-center">
 				<button
-					className={`px-4 py-3 rounded-md transition-colors ${
+					className={`w-40 inline-block px-4 py-3 rounded-md transition duration-300 ease-in-out text-zinc-50 ${
 						disabled ? "bg-gray-400" : colorClass
 					} ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
 					onClick={handleButtonClick}
