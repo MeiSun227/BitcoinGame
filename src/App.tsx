@@ -130,7 +130,7 @@ const App: React.FC = () => {
 			<img
 				src={bitcoinMan}
 				alt="Bitcoin"
-				className="w-32 lg:w-64 xl:w-80 2xl:w-1/2 absolute bottom-0 right-0 lg:px-1 xl:right-2 xl:mr-16"
+				className="w-32 lg:w-64 xl:w-80 2xl:w-80 absolute bottom-0 right-0 lg:px-1 xl:right-2 xl:mr-16"
 			/>
 			<div className="p-8 bg-white shadow-lg rounded-lg my-8">
 				<h1 className="text-3xl font-bold mb-2 text-amber-500">
