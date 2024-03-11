@@ -26,12 +26,14 @@ const App: React.FC = () => {
 	const [, setError] = useState<Error>();
 	const [playerId, setPlayerId] = useState<string | null>("");
 	const [showScoreResult, setScoreResult] = useState(false);
+	const [remainingTime, setRemainingTime] = useState(60);
+	const [showIndicator, setShowIndicator] = useState(false);
 
 	const { isLoading, isError } = useQuery<Bitcoin>(
 		"bitcoinPrice",
 		getBitcoinPrice,
 		{
-			refetchInterval: 60000,
+			refetchInterval: 10000,
 			onSuccess: (data) => {
 				if (data?.rates && data?.rates["EUR"]) {
 					setLatestBTCPrice(data?.rates["EUR"]);
@@ -64,6 +66,9 @@ const App: React.FC = () => {
 		const currentPriceAtGuess = latestBTCPrice;
 		setPriceAtGuess(currentPriceAtGuess);
 		setScoreResult(true);
+		setShowIndicator(true);
+		setRemainingTime(60);
+
 		setTimeout(async () => {
 			try {
 				const latestPriceData = await getBitcoinPrice();
@@ -99,10 +104,17 @@ const App: React.FC = () => {
 				setResolved(true); // Marks guess as resolved
 				setButtonDisabled(false); // Enables button for next guess
 				setScoreResult(true);
+				setShowIndicator(false);
 			}
-		}, 6000);
+		}, 60000); // 60 seconds
 
-		setGuessResult("");
+		const timer = setInterval(() => {
+			setRemainingTime((prevTime) => prevTime - 1);
+		}, 1000);
+
+		setTimeout(() => {
+			clearInterval(timer);
+		}, 60000); // Stop the countdown after 60 seconds
 	};
 
 	if (isLoading) return <div>Loading...</div>;
@@ -114,15 +126,15 @@ const App: React.FC = () => {
 			<img
 				src={bitcoinMan}
 				alt="Bitcoin"
-				className="w-32 lg:w-64 xl:w-80 2xl:w-6/12 absolute bottom-0 right-0 lg:px-1"
+				className="w-32 lg:w-64 xl:w-80 2xl:w-1/2 absolute bottom-0 right-0 lg:px-1 xl:right-2 xl:mr-16"
 			/>
-			<div className="p-8 bg-white shadow-lg rounded-lg">
+			<div className="p-8 bg-white shadow-lg rounded-lg my-8">
 				<h1 className="text-3xl font-bold mb-2 text-amber-500">
-					Bitcoin Price Prediction Game{" "}
+					Bitcoin Price Prediction Game
 				</h1>
 				<div>
 					<h2 className="text-lg font-semibold p-1 mr-2">Latest Price</h2>
-					<h3 className="text-green-600 text-xl">{latestBTCPrice} €</h3>
+					<h3 className="text-green-600 text-2xl">{latestBTCPrice} €</h3>
 				</div>
 
 				<div className="flex justify-center mt-4 mb-4">
@@ -146,6 +158,13 @@ const App: React.FC = () => {
 					</div>
 				</div>
 
+				<div className="mt-4">
+					{showIndicator && (
+						<div className="text-center mt-2 text-gray-600">
+							<p>Time remaining: {remainingTime} s</p>
+						</div>
+					)}
+				</div>
 				<div className="flex flex-col items-center justify-center h-full">
 					{showScoreResult && (
 						<ResultDisplayCard

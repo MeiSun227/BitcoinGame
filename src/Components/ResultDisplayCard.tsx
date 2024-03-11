@@ -32,18 +32,18 @@ const ResultDisplayCard: React.FC<ResultProps> = ({
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 				<div>
 					<p className="text-lg font-semibold p-1 mr-2">Latest Price</p>
-					<p className="text-green-600 text-xl">{latestBTCPrice} €</p>
+					<p className="text-green-600 text-lg">{latestBTCPrice} €</p>
 				</div>
 				<div>
 					<p className="text-lg font-semibold p-1">Price at Guess Time</p>
-					<p className="text-red-500 text-xl">{priceAtGuess} €</p>
+					<p className="text-red-500 text-lg">{priceAtGuess} €</p>
 				</div>
 			</div>
 			<div>
 				<p className="text-lg font-semibold pt-3">Your Guess</p>
 				<p className="text-semibold p-1">{guess}</p>
 			</div>
-			<div className="mt-6">
+			<div className="mt-2">
 				<p className="text-lg font-semibold pt-3">Result</p>
 				<p className="text-semibold p-1">{guessResult}</p>
 			</div>
