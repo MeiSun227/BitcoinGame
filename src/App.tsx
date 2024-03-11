@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import "./App.css";
 import { getBitcoinPrice } from "./Services/coinBaseService";
-import Button from "./Components/Button";
+import Button from "./Components/Button/Button";
 import { useEffect, useState } from "react";
 import { Bitcoin } from "./types";
 import {

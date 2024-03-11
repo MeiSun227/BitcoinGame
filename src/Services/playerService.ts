@@ -13,7 +13,7 @@ interface Player {
 	playerId: string;
 	score: number;
 }
-const baseUrl = import.meta.env.VITE_BASE_URL || "http://localhost:3001";
+const baseUrl = import.meta.env?.VITE_BASE_URL || "http://localhost:3001";
 
 export const updatePlayerScore = async (
 	playerId: string,

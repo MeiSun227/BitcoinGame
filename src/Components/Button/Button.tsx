@@ -1,4 +1,4 @@
-interface ButtonProps {
+export interface ButtonProps {
 	buttonText: string;
 	colorClass: string;
 	disabled: boolean;

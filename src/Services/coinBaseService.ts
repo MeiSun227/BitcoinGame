@@ -8,10 +8,8 @@ export const getBitcoinPrice = async () => {
 		return bitcoin;
 	} catch (error) {
 		if (axios.isAxiosError(error)) {
-			// Handle Axios errors
 			console.error("Axios Error:", error.message);
 		} else {
-			// Handle other errors
 			console.error("Error:", error);
 		}
 	}
