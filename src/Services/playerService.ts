@@ -23,7 +23,6 @@ export const updatePlayerScore = async (
 		const response = await axios.put(`${baseUrl}/player/${playerId}`, {
 			score: newScore,
 		});
-		console.log(response);
 		return response.data as UpdateScoreResponse;
 	} catch (error) {
 		throw new Error("Error updating player score");
@@ -31,10 +30,15 @@ export const updatePlayerScore = async (
 };
 
 export const createPlayer = async (): Promise<CreatePlayerResponse> => {
+	const storedPlayerId = localStorage.getItem("playerId");
+
+	if (storedPlayerId) {
+		return { playerId: storedPlayerId };
+	}
+
 	try {
 		const response = await axios.post(`${baseUrl}/player`);
 		const newPlayerId = response.data.playerId;
-		console.log(newPlayerId);
 
 		if (newPlayerId) {
 			localStorage.setItem("playerId", newPlayerId);
@@ -43,7 +47,7 @@ export const createPlayer = async (): Promise<CreatePlayerResponse> => {
 			throw new Error("Failed to retrieve player ID from response data.");
 		}
 	} catch (error) {
-		throw new Error("Error retrieving score: " + (error as Error).message);
+		throw new Error("Error creating player: " + (error as Error).message);
 	}
 };
 

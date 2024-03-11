@@ -49,7 +49,11 @@ const App: React.FC = () => {
 		const storedPlayerId = localStorage.getItem("playerId");
 		if (!storedPlayerId) {
 			console.log("No stored player ID found. Creating new player...");
-			createPlayer();
+			createPlayer().then((response) => {
+				const newPlayerId = response.playerId;
+				setPlayerId(newPlayerId);
+				localStorage.setItem("playerId", newPlayerId);
+			});
 		} else {
 			setPlayerId(storedPlayerId);
 			getScore(storedPlayerId).then((resp) => {
